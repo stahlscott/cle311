@@ -1,101 +1,176 @@
 import React from 'react';
-import {
-  Image,
-  Platform,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
-import { WebBrowser } from 'expo';
+import { Image, Linking, Platform, ScrollView, StyleSheet, View, Text } from 'react-native';
+import { ListItem, Icon } from 'react-native-elements';
+import { directory } from '../constants/directory';
 
-import { MonoText } from '../components/StyledText';
+// import { WebBrowser } from 'expo';
+// import { MonoText } from '../components/StyledText';
+
+/* TODO:  
+  Build list of links with descriptions, icons, & initiating phone calls to designated numbers
+  Store numbers in constants, store list of objects here ?
+  Directory page
+  About/help page
+  Test in iOS/android
+
+  https://twitter.com/DowntownCLE/status/1083725376654848001/photo/1
+*/
 
 export default class HomeScreen extends React.Component {
   static navigationOptions = {
     header: null,
   };
 
+  callList = [
+    {
+      imageSrc: require('../assets/images/trafficlight.png'),
+      issue: 'Broken Street Light or Street Base',
+      contact: directory.CPP,
+    },
+    {
+      imageSrc: require('../assets/images/streetlight.png'),
+      issue: 'Broken or Inoperable Traffic Light',
+      contact: directory.CLE,
+    },
+    {
+      imageSrc: require('../assets/images/graffiti.png'),
+      issue: 'Graffiti',
+      contact: directory.DCA,
+    },
+    {
+      imageSrc: require('../assets/images/dumpster.png'),
+      issue: 'Overflowing Dumpster',
+      altText: 'Contact Owner',
+    },
+    {
+      imageSrc: require('../assets/images/tree.png'),
+      issue: 'Broken Tree Limb',
+      contact: directory.CLE,
+    },
+    {
+      imageSrc: require('../assets/images/sidewalk.png'),
+      issue: 'Lifted Sidewalk',
+      contact: directory.BOS,
+    },
+    {
+      imageSrc: require('../assets/images/litter.png'),
+      issue: 'Litter on Sidewalk',
+      contact: directory.DCA,
+    },
+    {
+      imageSrc: require('../assets/images/mailbox.png'),
+      issue: 'Damaged Mailbox',
+      contact: directory.USPS,
+    },
+    {
+      imageSrc: require('../assets/images/utilitybox.png'),
+      issue: 'Damaged or Vandalized Utility Box',
+      contact: directory.CLE,
+    },
+    {
+      imageSrc: require('../assets/images/hydrant.png'),
+      issue: 'Leaking Fire Hydrant',
+      contact: directory.WD,
+    },
+    {
+      imageSrc: require('../assets/images/streettrash.png'),
+      issue: 'Trash in Streets',
+      contact: directory.CLE,
+    },
+    {
+      imageSrc: require('../assets/images/trashcan.png'),
+      issue: 'Overflowing Trash Can',
+      contact: directory.CLE,
+    },
+    {
+      imageSrc: require('../assets/images/parkingmeter.png'),
+      issue: 'Broken Parking Meter',
+      contact: directory.CLE,
+    },
+    {
+      imageSrc: require('../assets/images/busshelter.png'),
+      issue: 'Damaged Bus Shelter',
+      contact: directory.RTA,
+    },
+    {
+      imageSrc: require('../assets/images/streetsign.png'),
+      issue: 'Damaged or Missing Street Sign',
+      contact: directory.CLE,
+    },
+    {
+      imageSrc: require('../assets/images/banner.png'),
+      issue: 'Damaged Banner',
+      contact: directory.DCA,
+    },
+  ];
+
   render() {
     return (
       <View style={styles.container}>
-        <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
-          <View style={styles.welcomeContainer}>
-            <Image
-              source={
-                __DEV__
-                  ? require('../assets/images/robot-dev.png')
-                  : require('../assets/images/robot-prod.png')
-              }
-              style={styles.welcomeImage}
-            />
-          </View>
-
-          <View style={styles.getStartedContainer}>
-            {this._maybeRenderDevelopmentModeWarning()}
-
-            <Text style={styles.getStartedText}>Get started by opening</Text>
-
-            <View style={[styles.codeHighlightContainer, styles.homeScreenFilename]}>
-              <MonoText style={styles.codeHighlightText}>screens/HomeScreen.js</MonoText>
-            </View>
-
-            <Text style={styles.getStartedText}>
-              Change this text and your app will automatically reload.
-            </Text>
-          </View>
-
-          <View style={styles.helpContainer}>
-            <TouchableOpacity onPress={this._handleHelpPress} style={styles.helpLink}>
-              <Text style={styles.helpLinkText}>Help, it didn’t automatically reload!</Text>
-            </TouchableOpacity>
-          </View>
+        <ScrollView contentContainerStyle={styles.listContainer}>
+          {/* {this._maybeRenderDevelopmentModeWarning()} */}
+          {this.renderListElements()}
         </ScrollView>
-
-        <View style={styles.tabBarInfoContainer}>
-          <Text style={styles.tabBarInfoText}>This is a tab bar. You can edit it in:</Text>
-
-          <View style={[styles.codeHighlightContainer, styles.navigationFilename]}>
-            <MonoText style={styles.codeHighlightText}>navigation/MainTabNavigator.js</MonoText>
-          </View>
-        </View>
       </View>
     );
   }
 
+  renderListElements() {
+    return this.callList.map((item, index) => (
+      <ListItem
+        key={index}
+        leftElement={
+          <Image
+            resizeMode="contain"
+            source={item.imageSrc ? item.imageSrc : require('../assets/images/oh311.png')}
+            style={{ width: 50, height: 50, borderRadius: 8 }}
+          />
+        }
+        title={item.issue}
+        rightElement={
+          item.contact ? (
+            <Icon
+              name={Platform.OS === 'ios' ? 'ios-call' : 'md-call'}
+              type="ionicon"
+              color="#2e78b7"
+              onPress={() => this._handleCall(item.contact.phone)}
+            />
+          ) : (
+            <Text>{item.altText}</Text>
+          )
+        }
+      />
+    ));
+  }
+
   _maybeRenderDevelopmentModeWarning() {
     if (__DEV__) {
-      const learnMoreButton = (
-        <Text onPress={this._handleLearnMorePress} style={styles.helpLinkText}>
-          Learn more
-        </Text>
-      );
-
-      return (
-        <Text style={styles.developmentModeText}>
-          Development mode is enabled, your app will be slower but you can use useful development
-          tools. {learnMoreButton}
-        </Text>
-      );
-    } else {
-      return (
-        <Text style={styles.developmentModeText}>
-          You are not in development mode, your app will run at full speed.
-        </Text>
-      );
+      return <Text>DEV MODE</Text>;
     }
   }
 
-  _handleLearnMorePress = () => {
-    WebBrowser.openBrowserAsync('https://docs.expo.io/versions/latest/guides/development-mode');
-  };
+  // _handleLearnMorePress = () => {
+  //   WebBrowser.openBrowserAsync('https://docs.expo.io/versions/latest/guides/development-mode');
+  // };
 
-  _handleHelpPress = () => {
-    WebBrowser.openBrowserAsync(
-      'https://docs.expo.io/versions/latest/guides/up-and-running.html#can-t-see-your-changes'
-    );
-  };
+  // _handleHelpPress = () => {
+  //   WebBrowser.openBrowserAsync(
+  //     'https://docs.expo.io/versions/latest/guides/up-and-running.html#can-t-see-your-changes'
+  //   );
+  // };
+
+  _handleCall(number) {
+    const url = `tel:${number}`;
+    Linking.canOpenURL(url)
+      .then(supported => {
+        if (!supported) {
+          console.log("Can't handle url: " + url);
+        } else {
+          return Linking.openURL(url);
+        }
+      })
+      .catch(err => console.error('An error occurred', err));
+  }
 }
 
 const styles = StyleSheet.create({
@@ -115,6 +190,12 @@ const styles = StyleSheet.create({
   },
   welcomeContainer: {
     alignItems: 'center',
+    marginTop: 10,
+    marginBottom: 20,
+  },
+  listContainer: {
+    alignItems: 'stretch',
+    paddingTop: 30,
     marginTop: 10,
     marginBottom: 20,
   },
@@ -180,8 +261,15 @@ const styles = StyleSheet.create({
   },
   helpLink: {
     paddingVertical: 15,
+    justifyContent: 'space-between',
   },
-  helpLinkText: {
+  issueText: {
+    fontSize: 14,
+    color: '#000',
+  },
+  altText: {
+    textAlignVertical: 'center',
+    height: 45,
     fontSize: 14,
     color: '#2e78b7',
   },
