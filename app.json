@@ -1,6 +1,7 @@
 {
   "expo": {
-    "name": "cle311",
+    "name": "CLE 311",
+    "description": "A quick directory for contacting Cleveland city services.",
     "slug": "cle311",
     "privacy": "public",
     "sdkVersion": "32.0.0",
@@ -8,6 +9,7 @@
       "ios",
       "android"
     ],
+    "githubUrl": "https://github.com/stahlscott/cle311",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/oh311.png",

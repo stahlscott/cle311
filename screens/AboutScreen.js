@@ -18,7 +18,7 @@ export default class SettingsScreen extends React.Component {
             style={styles.helpLinkText}
             onPress={() => this._handleLinkPress('https://twitter.com/DowntownCLE/status/1083725376654848001')}
           >
-            Image and contact information from this Downtown CLE tweet
+            Image, contact information and inspiration from this @DowntownCLE tweet
           </Text>
         </View>
         <View style={styles.textBlock}>
