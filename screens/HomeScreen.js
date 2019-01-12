@@ -3,14 +3,8 @@ import { Image, Linking, Platform, ScrollView, StyleSheet, View, Text } from 're
 import { ListItem, Icon } from 'react-native-elements';
 import { directory } from '../constants/directory';
 
-/* TODO:  
-  Build list of links with descriptions, icons, & initiating phone calls to designated numbers
-  Store numbers in constants, store list of objects here ?
-  Directory page
-  About/help page
-  Test in iOS/android
-
-  https://twitter.com/DowntownCLE/status/1083725376654848001/photo/1
+/* 
+  https://twitter.com/DowntownCLE/status/1083725376654848001/
 */
 
 export default class HomeScreen extends React.Component {
@@ -37,6 +31,7 @@ export default class HomeScreen extends React.Component {
     {
       imageSrc: require('../assets/images/dumpster.png'),
       issue: 'Overflowing Dumpster',
+      contact: null,
       altText: 'Contact Property Owner',
     },
     {
