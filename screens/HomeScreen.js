@@ -3,9 +3,6 @@ import { Image, Linking, Platform, ScrollView, StyleSheet, View, Text } from 're
 import { ListItem, Icon } from 'react-native-elements';
 import { directory } from '../constants/directory';
 
-// import { WebBrowser } from 'expo';
-// import { MonoText } from '../components/StyledText';
-
 /* TODO:  
   Build list of links with descriptions, icons, & initiating phone calls to designated numbers
   Store numbers in constants, store list of objects here ?
@@ -40,7 +37,7 @@ export default class HomeScreen extends React.Component {
     {
       imageSrc: require('../assets/images/dumpster.png'),
       issue: 'Overflowing Dumpster',
-      altText: 'Contact Owner',
+      altText: 'Contact Property Owner',
     },
     {
       imageSrc: require('../assets/images/tree.png'),
@@ -107,10 +104,7 @@ export default class HomeScreen extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <ScrollView contentContainerStyle={styles.listContainer}>
-          {/* {this._maybeRenderDevelopmentModeWarning()} */}
-          {this.renderListElements()}
-        </ScrollView>
+        <ScrollView contentContainerStyle={styles.listContainer}>{this.renderListElements()}</ScrollView>
       </View>
     );
   }
@@ -118,23 +112,19 @@ export default class HomeScreen extends React.Component {
   renderListElements() {
     return this.callList.map((item, index) => (
       <ListItem
+        onPress={item.contact ? () => this._handleCall(item.contact.phone) : () => {}}
         key={index}
         leftElement={
           <Image
             resizeMode="contain"
             source={item.imageSrc ? item.imageSrc : require('../assets/images/oh311.png')}
-            style={{ width: 50, height: 50, borderRadius: 8 }}
+            style={styles.thumbnail}
           />
         }
         title={item.issue}
         rightElement={
           item.contact ? (
-            <Icon
-              name={Platform.OS === 'ios' ? 'ios-call' : 'md-call'}
-              type="ionicon"
-              color="#2e78b7"
-              onPress={() => this._handleCall(item.contact.phone)}
-            />
+            <Icon name={Platform.OS === 'ios' ? 'ios-call' : 'md-call'} type="ionicon" color="#2e78b7" />
           ) : (
             <Text>{item.altText}</Text>
           )
@@ -148,16 +138,6 @@ export default class HomeScreen extends React.Component {
       return <Text>DEV MODE</Text>;
     }
   }
-
-  // _handleLearnMorePress = () => {
-  //   WebBrowser.openBrowserAsync('https://docs.expo.io/versions/latest/guides/development-mode');
-  // };
-
-  // _handleHelpPress = () => {
-  //   WebBrowser.openBrowserAsync(
-  //     'https://docs.expo.io/versions/latest/guides/up-and-running.html#can-t-see-your-changes'
-  //   );
-  // };
 
   _handleCall(number) {
     const url = `tel:${number}`;
@@ -272,5 +252,10 @@ const styles = StyleSheet.create({
     height: 45,
     fontSize: 14,
     color: '#2e78b7',
+  },
+  thumbnail: {
+    width: 50,
+    height: 50,
+    borderRadius: 6,
   },
 });

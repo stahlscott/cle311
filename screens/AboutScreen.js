@@ -11,7 +11,12 @@ export default class SettingsScreen extends React.Component {
     return (
       <View style={styles.container}>
         <View style={styles.textBlock}>
-          <Text>This app is an open source, 24 hour project to help improve the City of Cleveland.</Text>
+          <Text>
+            This app is an open source, 24 hour project to help residents connect with and improve the City of
+            Cleveland.
+          </Text>
+          <Text />
+          <Text>It is not built in association with the city or any of its affiliated organizations.</Text>
         </View>
         <View style={styles.textBlock}>
           <Text

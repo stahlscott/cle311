@@ -10,7 +10,7 @@
       "android"
     ],
     "githubUrl": "https://github.com/stahlscott/cle311",
-    "version": "1.0.0",
+    "version": "2.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/oh311.png",
     "splash": {
@@ -25,7 +25,14 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": false,
+      "bundleIdentifier": "com.stahlish.cle311",
+      "buildNumber": "2.0.0"
+    },
+    "android": {
+      "package": "com.stahlish.cle311",
+      "versionCode": 2,
+      "permissions": []
     }
   }
 }
