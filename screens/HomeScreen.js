@@ -128,23 +128,17 @@ export default class HomeScreen extends React.Component {
     ));
   }
 
-  _maybeRenderDevelopmentModeWarning() {
-    if (__DEV__) {
-      return <Text>DEV MODE</Text>;
-    }
-  }
-
   _handleCall(number) {
     const url = `tel:${number}`;
     Linking.canOpenURL(url)
       .then(supported => {
         if (!supported) {
-          console.log("Can't handle url: " + url);
+          console.log("Can't handle url: " + url); // eslint-disable-line
         } else {
           return Linking.openURL(url);
         }
       })
-      .catch(err => console.error('An error occurred', err));
+      .catch(err => console.error('An error occurred', err)); // eslint-disable-line
   }
 }
 
