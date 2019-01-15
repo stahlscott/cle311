@@ -27,7 +27,8 @@
     "ios": {
       "supportsTablet": false,
       "bundleIdentifier": "com.stahlish.cle311",
-      "buildNumber": "2.0.0"
+      "buildNumber": "2.0.1",
+      "icon": "./assets/images/oh311-noalpha.png"
     },
     "android": {
       "package": "com.stahlish.cle311",
