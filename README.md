@@ -1,7 +1,7 @@
 Available through:
 - [Android / Google Play Store](https://play.google.com/store/apps/details?id=com.stahlish.cle311)
-- iOS (available soon
-- [Expo test page](https://expo.io/@stahlscott/cle311))
+- iOS (available soon)
+- [Expo test page](https://expo.io/@stahlscott/cle311)
 
 This project was written in [React Native](https://facebook.github.io/react-native/) and wrapped with [Expo](https://expo.io/) for ease of packaging and distribution.
 
